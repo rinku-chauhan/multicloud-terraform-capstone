@@ -1,655 +1,353 @@
-# Multi-Cloud Deployment and Management with Terraform
+# Multi-Cloud Infrastructure Deployment and Management using Terraform
 
-## Capstone Project
+> Capstone Project
 
-### Team Size
-4–5 Members
+## Project Overview
 
-### Project Duration
-6 Sprints (Approx. 120 Hours)
+This project demonstrates a Terraform-based multi-cloud infrastructure deployment across AWS, Azure, and Google Cloud Platform (GCP).
 
----
+The solution provisions cloud resources using Infrastructure as Code (IaC), implements DNS-based failover, disaster recovery procedures, monitoring and alerting, cost visibility, and deployment automation using GitHub Actions.
 
-# Project Overview
-
-This project demonstrates how Infrastructure as Code (IaC) can be used to provision, manage, monitor, and automate resources across multiple cloud providers using Terraform.
-
-The solution deploys infrastructure across:
-
-- Amazon Web Services (AWS)
-- Microsoft Azure
-- Google Cloud Platform (GCP)
-
-The project also implements:
-
-- Multi-cloud infrastructure provisioning
-- DNS-based failover
-- Disaster Recovery (DR)
-- Data replication
-- Monitoring and alerting
-- Cost management
-- CI/CD automation using GitHub Actions
+The project is designed as a Proof of Concept (PoC) that showcases real-world DevOps and Multi-Cloud engineering practices while remaining cost-effective and achievable within the capstone timeline.
 
 ---
 
-# Problem Statement
+## What This Project Delivers
 
-Managing infrastructure across multiple cloud providers is often complex and prone to configuration drift.
-
-Organizations need a consistent way to:
-
-- Provision infrastructure
-- Manage resources
-- Improve availability
-- Reduce vendor lock-in
-- Implement disaster recovery
-- Automate deployments
-
-This project solves these challenges using Terraform and GitHub Actions.
-
----
-
-# Project Objectives
-
-### Infrastructure as Code
-
-Provision infrastructure across AWS, Azure, and GCP using Terraform.
-
-### Multi-Cloud Deployment
-
-Deploy identical workloads across all cloud providers.
-
-### High Availability
-
-Implement DNS-based failover mechanisms.
-
-### Disaster Recovery
-
-Maintain backups and recovery procedures across cloud platforms.
-
-### Monitoring
-
-Monitor resource health and utilization.
-
-### Cost Optimization
-
-Track cloud spending and resource utilization.
-
-### Deployment Automation
-
-Automate Terraform validation and deployment using GitHub Actions.
+| Layer             | Deliverable                                      |
+| ----------------- | ------------------------------------------------ |
+| Infrastructure    | Terraform modules for AWS, Azure, and GCP        |
+| Compute           | EC2, Azure VM, GCP Compute Engine                |
+| Storage           | S3, Azure Storage, GCP Storage Bucket            |
+| Load Balancing    | DNS-based failover using Route53                 |
+| Disaster Recovery | Cross-cloud backup and recovery strategy         |
+| Monitoring        | CloudWatch, Azure Monitor, Cloud Monitoring      |
+| Alerting          | Email-based operational alerts                   |
+| Cost Management   | Cloud cost visibility dashboards                 |
+| CI/CD             | GitHub Actions deployment pipeline               |
+| Documentation     | Deployment guides and architecture documentation |
 
 ---
 
-# Solution Architecture
+# Architecture
 
-```text
-                           GitHub Repository
-                                   │
-                                   │
-                           GitHub Actions
-                                   │
-                    Terraform Validate / Plan / Apply
-                                   │
-         -----------------------------------------------------
-         │                       │                         │
-         │                       │                         │
-        AWS                    Azure                     GCP
-         │                       │                         │
-     EC2 + S3          Linux VM + Storage      Compute VM + Bucket
-         │                       │                         │
-         -----------------------------------------------------
-                                   │
-                          DNS Failover Layer
-                                   │
-                              End Users
-```
+## High-Level Architecture
+
+[Architecture Diagram Here]
+
+### Workflow
+
+GitHub Repository
+
+↓
+
+GitHub Actions
+
+↓
+
+Terraform Plan & Apply
+
+↓
+
+AWS + Azure + GCP Infrastructure
+
+↓
+
+DNS Failover Layer
+
+↓
+
+End Users
+
+---
+
+## Cloud Deployment Stack
+
+### AWS
+
+* EC2 Instance
+* Security Group
+* S3 Bucket
+* Route53
+
+### Azure
+
+* Linux VM
+* Virtual Network
+* Storage Account
+
+### GCP
+
+* Compute Engine VM
+* Firewall Rules
+* Cloud Storage Bucket
+
+---
+
+## DNS Failover Flow
+
+Primary Provider:
+
+AWS
+
+Secondary Provider:
+
+Azure
+
+Tertiary Provider:
+
+GCP
+
+### Failover Scenario
+
+1. User accesses application.
+2. Route53 health checks monitor AWS endpoint.
+3. AWS becomes unavailable.
+4. DNS automatically redirects traffic to Azure.
+5. If Azure becomes unavailable, traffic redirects to GCP.
+
+---
+
+## Disaster Recovery Flow
+
+### Backup Sources
+
+* AWS S3
+* Azure Storage
+* GCP Storage
+
+### Recovery Process
+
+1. Backup created daily.
+2. Data replicated across cloud providers.
+3. Primary cloud failure occurs.
+4. Backup restored to secondary cloud.
+5. Services resume operation.
+
+### Recovery Targets
+
+| Metric | Target     |
+| ------ | ---------- |
+| RPO    | 24 Hours   |
+| RTO    | 30 Minutes |
+
+---
+
+# Features
+
+## Infrastructure Features
+
+| Feature                | Description                                 |
+| ---------------------- | ------------------------------------------- |
+| Multi-Cloud Deployment | Deploy resources across AWS, Azure, and GCP |
+| Infrastructure as Code | Fully managed using Terraform               |
+| Modular Design         | Reusable Terraform modules                  |
+| Automated Provisioning | Infrastructure deployed from code           |
+| DNS Failover           | Automatic traffic redirection               |
+
+---
+
+## Operations Features
+
+| Feature               | Description                                |
+| --------------------- | ------------------------------------------ |
+| Monitoring            | Infrastructure health visibility           |
+| Alerting              | Email notifications for threshold breaches |
+| Cost Tracking         | Resource and billing visibility            |
+| Disaster Recovery     | Backup and restoration procedures          |
+| Deployment Automation | GitHub Actions CI/CD                       |
 
 ---
 
 # Technology Stack
 
-## Cloud Providers
-
-- AWS
-- Azure
-- GCP
-
-## Infrastructure as Code
-
-- Terraform
-
-## Version Control
-
-- Git
-- GitHub
-
-## CI/CD
-
-- GitHub Actions
-
-## Monitoring
-
-- AWS CloudWatch
-- Azure Monitor
-- Google Cloud Monitoring
-
-## Web Server
-
-- Nginx
-
-## Storage
-
-- AWS S3
-- Azure Storage Account
-- Google Cloud Storage
+| Component       | Technology                                |
+| --------------- | ----------------------------------------- |
+| IaC             | Terraform                                 |
+| Cloud Providers | AWS, Azure, GCP                           |
+| Compute         | EC2, Azure VM, GCE                        |
+| Storage         | S3, Azure Storage, GCS                    |
+| Monitoring      | CloudWatch, Azure Monitor, GCP Monitoring |
+| CI/CD           | GitHub Actions                            |
+| Version Control | GitHub                                    |
+| Web Server      | Nginx                                     |
 
 ---
 
-# Team Responsibilities
+# Cloud Resources
 
-## Member 1 – Terraform Lead
-
-### Responsibilities
-
-- Terraform project structure
-- Providers configuration
-- Variables and outputs
-- Module development
-- State management
-
-### Deliverables
-
-- Terraform codebase
-- Infrastructure modules
-- Project architecture
+| Resource Type | AWS             | Azure           | GCP            |
+| ------------- | --------------- | --------------- | -------------- |
+| Compute       | EC2             | Linux VM        | Compute Engine |
+| Storage       | S3              | Storage Account | Cloud Storage  |
+| Networking    | VPC             | VNet            | VPC            |
+| Security      | Security Groups | NSG             | Firewall Rules |
 
 ---
 
-## Member 2 – AWS Infrastructure
+# Project Structure
 
-### Responsibilities
+multicloud-terraform-capstone/
 
-- VPC
-- Security Groups
-- EC2 Instance
-- S3 Bucket
-
-### Deliverables
-
-- AWS deployment
-- Infrastructure screenshots
-- AWS documentation
-
----
-
-## Member 3 – Azure Infrastructure
-
-### Responsibilities
-
-- Resource Group
-- Virtual Network
-- Linux VM
-- Storage Account
-
-### Deliverables
-
-- Azure deployment
-- Infrastructure screenshots
-- Azure documentation
-
----
-
-## Member 4 – GCP Infrastructure
-
-### Responsibilities
-
-- VPC Network
-- Firewall Rules
-- Compute Engine VM
-- Cloud Storage Bucket
-
-### Deliverables
-
-- GCP deployment
-- Infrastructure screenshots
-- GCP documentation
-
----
-
-## Member 5 – CI/CD, Monitoring & Documentation
-
-### Responsibilities
-
-- GitHub Actions
-- Monitoring setup
-- Cost analysis
-- Documentation
-- Final presentation
-
-### Deliverables
-
-- CI/CD pipeline
-- Monitoring dashboard
-- README
-- PPT
-
----
-
-# Infrastructure Deployment
-
-## AWS
-
-Resources:
-
-- EC2 Instance
-- Security Group
-- S3 Bucket
-
-Application:
-
-```html
-<h1>Hello from AWS</h1>
-```
-
----
-
-## Azure
-
-Resources:
-
-- Resource Group
-- Linux VM
-- Storage Account
-
-Application:
-
-```html
-<h1>Hello from Azure</h1>
-```
-
----
-
-## GCP
-
-Resources:
-
-- Compute Engine VM
-- Firewall Rule
-- Cloud Storage Bucket
-
-Application:
-
-```html
-<h1>Hello from GCP</h1>
-```
-
----
-
-# Load Balancing and Failover
-
-## Objective
-
-Ensure service availability when one cloud provider becomes unavailable.
-
-## Implementation
-
-### Primary Cloud
-
-AWS
-
-### Secondary Cloud
-
-Azure
-
-### Tertiary Cloud
-
-GCP
-
-### DNS Routing
-
-AWS Route53 DNS Failover
-
-```text
-Primary Record
-   ↓
-AWS VM
-
-Secondary Record
-   ↓
-Azure VM
-
-Tertiary Record
-   ↓
-GCP VM
-```
-
-## Failover Demonstration
-
-Scenario:
-
-1. AWS VM stopped
-2. Health check fails
-3. DNS redirects traffic to Azure
-4. Azure serves application
-
----
-
-# Disaster Recovery and Data Replication
-
-## Objective
-
-Protect business-critical data from outages.
-
-## Storage Strategy
-
-### AWS
-
-S3 Bucket
-
-### Azure
-
-Storage Account
-
-### GCP
-
-Cloud Storage Bucket
-
-## Replication Strategy
-
-A sample file is maintained across all providers.
-
-```text
-customer-data.txt
-```
-
-### Backup Flow
-
-```text
-AWS S3
-   ↓
-Azure Storage
-   ↓
-GCP Storage
-```
-
-## Recovery Scenario
-
-1. Data lost in AWS
-2. Restore from Azure backup
-3. Validate recovery
-
-## Recovery Targets
-
-| Metric | Value |
-|----------|----------|
-| RPO | 24 Hours |
-| RTO | 30 Minutes |
-
----
-
-# Monitoring, Alerts and Cost Management
-
-## Monitoring
-
-### AWS
-
-CloudWatch
-
-### Azure
-
-Azure Monitor
-
-### GCP
-
-Cloud Monitoring
-
-## Metrics Collected
-
-- CPU Utilization
-- Memory Usage
-- Disk Usage
-- Network Traffic
-
----
-
-## Alerting
-
-Alert Example:
-
-```text
-CPU Utilization > 80%
-```
-
-Notification Method:
-
-- Email Alerts
-
----
-
-## Cost Management
-
-### AWS
-
-Cost Explorer
-
-### Azure
-
-Cost Analysis
-
-### GCP
-
-Billing Dashboard
-
-## Cost Tracking Dashboard
-
-| Cloud Provider | Monthly Cost |
-|----------------|--------------|
-| AWS | TBD |
-| Azure | TBD |
-| GCP | TBD |
-
----
-
-# CI/CD Pipeline
-
-## GitHub Actions Workflow
-
-```text
-Code Push
-    ↓
-Terraform Format Check
-    ↓
-Terraform Validate
-    ↓
-Terraform Plan
-    ↓
-Terraform Apply
-```
-
----
-
-## Benefits
-
-- Automated deployments
-- Reduced manual effort
-- Consistent infrastructure provisioning
-- Faster delivery cycles
-
----
-
-# Repository Structure
-
-```text
-multicloud-capstone/
-│
 ├── terraform/
+
 │   ├── aws/
+
 │   ├── azure/
+
 │   ├── gcp/
+
 │   ├── providers.tf
+
 │   ├── variables.tf
-│   ├── outputs.tf
-│   └── main.tf
-│
+
+│   └── outputs.tf
+
 ├── docs/
-│   ├── architecture/
-│   ├── screenshots/
-│   ├── diagrams/
-│   └── deployment-guide.md
-│
+
+├── diagrams/
+
+├── screenshots/
+
 ├── .github/
+
 │   └── workflows/
-│       └── terraform.yml
-│
-├── presentation/
-│   └── Capstone-Presentation.pptx
-│
+
 └── README.md
-```
+
+---
+
+# Sprint Plan
+
+| Sprint   | Focus Area                   | Deliverable                 |
+| -------- | ---------------------------- | --------------------------- |
+| Sprint 1 | Planning & Terraform Setup   | Project foundation          |
+| Sprint 2 | AWS Infrastructure           | AWS deployment              |
+| Sprint 3 | Azure & GCP Infrastructure   | Multi-cloud deployment      |
+| Sprint 4 | Failover & Disaster Recovery | HA and DR testing           |
+| Sprint 5 | Monitoring & Cost Management | Dashboards and alerts       |
+| Sprint 6 | Documentation & Final Demo   | Presentation-ready solution |
+
+---
+
+# Team Roles
+
+| Role            | Responsibility                            |
+| --------------- | ----------------------------------------- |
+| Terraform Lead  | Terraform modules and architecture        |
+| AWS Engineer    | AWS infrastructure                        |
+| Azure Engineer  | Azure infrastructure                      |
+| GCP Engineer    | GCP infrastructure                        |
+| DevOps Engineer | GitHub Actions, Monitoring, Documentation |
+
+---
+
+# Deployment Automation
+
+## GitHub Actions Pipeline
+
+Code Push
+
+↓
+
+Terraform Format
+
+↓
+
+Terraform Validate
+
+↓
+
+Terraform Plan
+
+↓
+
+Terraform Apply
 
 ---
 
 # Testing Strategy
 
-## Infrastructure Testing
+## Infrastructure Validation
 
-### AWS
-
-- EC2 Accessible
-- S3 Accessible
-
-### Azure
-
-- VM Accessible
-- Storage Accessible
-
-### GCP
-
-- VM Accessible
-- Bucket Accessible
-
----
+* AWS deployment verification
+* Azure deployment verification
+* GCP deployment verification
 
 ## Failover Testing
 
-Scenario:
-
-```text
-AWS Down
-↓
-Azure Active
-```
-
-Expected Result:
-
-Traffic automatically redirected.
-
----
+* Simulate AWS outage
+* Verify DNS failover to Azure
 
 ## Disaster Recovery Testing
 
-Scenario:
-
-```text
-Delete File
-↓
-Restore From Backup
-```
-
-Expected Result:
-
-Successful recovery.
-
----
+* Backup validation
+* Recovery validation
 
 ## Monitoring Validation
 
-Verify:
-
-- Metrics visible
-- Alerts generated
-- Dashboard updated
+* Metrics collection
+* Alert generation
+* Dashboard visibility
 
 ---
 
-# Deliverables
+# Key Architecture Decisions
 
-## Infrastructure
+| Decision                | Rationale                          |
+| ----------------------- | ---------------------------------- |
+| Terraform               | Multi-cloud Infrastructure as Code |
+| Route53 Failover        | Simple and effective DNS failover  |
+| Nginx                   | Lightweight web server             |
+| GitHub Actions          | Free CI/CD integration             |
+| Native Cloud Monitoring | Reduced complexity and cost        |
 
-- AWS Deployment
-- Azure Deployment
-- GCP Deployment
+---
 
-## Automation
+# Evaluation Alignment
 
-- Terraform Scripts
-- GitHub Actions Pipeline
+| Criterion               | How We Address It                                      |
+| ----------------------- | ------------------------------------------------------ |
+| Implementation (75%)    | Multi-cloud Terraform deployment, failover, monitoring |
+| Documentation (15%)     | Architecture, deployment guides, testing evidence      |
+| Cost Optimization (10%) | Free-tier design and resource tracking                 |
 
-## Monitoring
+---
 
-- Monitoring Dashboard
-- Alert Configuration
+# Capstone Requirements Mapping
 
-## Documentation
-
-- Architecture Diagram
-- Deployment Guide
-- Disaster Recovery Plan
-- Testing Report
-
-## Presentation
-
-- Project PPT
-- Live Demonstration
+| Capstone Requirement        | Implementation                   |
+| --------------------------- | -------------------------------- |
+| Multi-cloud deployment      | AWS, Azure, GCP                  |
+| Terraform automation        | Modular Terraform code           |
+| Load balancing and failover | Route53 DNS failover             |
+| Disaster recovery           | Backup and recovery workflow     |
+| Monitoring and alerts       | Native cloud monitoring services |
+| Deployment automation       | GitHub Actions                   |
 
 ---
 
 # Future Enhancements
 
-- Kubernetes Deployment (EKS, AKS, GKE)
-- HashiCorp Vault Integration
-- Centralized Logging with ELK Stack
-- Prometheus & Grafana Integration
-- Cross-Cloud Load Balancing
-- Automated Database Replication
-- Blue-Green Deployments
-
----
-
-# Skills Demonstrated
-
-- Terraform
-- AWS
-- Azure
-- GCP
-- Infrastructure as Code
-- GitHub Actions
-- CI/CD
-- Cloud Monitoring
-- Disaster Recovery
-- High Availability
-- DNS Failover
-- Cost Optimization
-- Team Collaboration
-- Technical Documentation
+* Kubernetes (EKS, AKS, GKE)
+* HashiCorp Vault
+* Prometheus and Grafana
+* Centralized Logging
+* Blue-Green Deployments
+* Cross-Cloud Load Balancers
 
 ---
 
 # Team Members
 
-| Name | Role |
-|--------|--------|
-| Member 1 | Terraform Lead |
-| Member 2 | AWS Engineer |
-| Member 3 | Azure Engineer |
-| Member 4 | GCP Engineer |
-| Member 5 | DevOps & Documentation |
+| Name          | Role            |
+| ------------- | --------------- |
+| TBD           | Terraform Lead  |
+| TBD           | AWS Engineer    |
+| TBD           | Azure Engineer  |
+| TBD           | GCP Engineer    |
+| TBD           | DevOps Engineer |
 
 ---
 
-# Project Outcome
-
-Successfully deploy and manage infrastructure across AWS, Azure, and GCP using Terraform while implementing failover, disaster recovery, monitoring, cost management, and CI/CD automation.
-
-This project demonstrates real-world DevOps and Multi-Cloud engineering practices and serves as a production-inspired proof of concept for cloud infrastructure management.
+Built as part of the Hero Vired Multi-Cloud Architecture & DevOps Capstone Project.
